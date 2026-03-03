@@ -16,8 +16,12 @@ export const feeDatabase: Record<string, PlatformConfig> = {
     ebay: {
         name: "eBay",
         rule: {
-            commissionPercent: 0.135,
-            processingFixed: 0.30,
+            commissionPercent: 0.1325,
+            tiered: (price: number) => {
+                const commission = price * 0.1325;
+                const fixedFee = price > 10 ? 0.40 : 0.30;
+                return commission + fixedFee;
+            },
             appliesToShipping: true,
         },
     },
@@ -78,6 +82,7 @@ export interface FeeCalculationsInput {
     isProMode: boolean;
     tiktokAffiliatePercent: number;
     stockxSellerLevel: 1 | 2 | 3 | 4 | 5;
+    isNonStandardCategory?: boolean;
 }
 
 export interface PlatformResult {
@@ -88,9 +93,7 @@ export interface PlatformResult {
     procFee: number;
     totalFee: number;
     profit: number;
-    roi: number; // This is actually Margin in the new spec, but let's keep consistency for now or align with ROI? 
-    // Spec says margin = (profit / price) * 100. Previous code called it ROI (profit / cost * 100).
-    // I will call it margin in the internal function as requested.
+    margin: number;
     note?: string;
 }
 
@@ -112,6 +115,8 @@ export function calculateFees(input: {
     if (price <= 0) {
         const sellerShipping = sellerPaysShipping ? shipping : 0;
         return {
+            platformFee: 0,
+            procFee: 0,
             fee: 0,
             profit: round(0 - cost - sellerShipping),
             margin: 0
@@ -136,8 +141,10 @@ export function calculateFees(input: {
     // 3. Processing
     const processing = (rule.processingPercent || 0) * base + (rule.processingFixed || 0);
 
-    // 4. Total fee
-    const fee = round((commission || 0) + (processing || 0));
+    // 4. Total and Split Fees
+    const platformFee = round(commission || 0);
+    const procFee = round(processing || 0);
+    const fee = round(platformFee + procFee);
 
     // 5. Seller shipping cost
     const sellerShippingCost = sellerPaysShipping ? shipping : 0;
@@ -149,6 +156,8 @@ export function calculateFees(input: {
     const margin = price > 0 ? round((profit / price) * 100) : 0;
 
     return {
+        platformFee: isNaN(platformFee) ? 0 : platformFee,
+        procFee: isNaN(procFee) ? 0 : procFee,
         fee: isNaN(fee) ? 0 : fee,
         profit: isNaN(profit) ? 0 : profit,
         margin: isNaN(margin) ? 0 : margin
@@ -162,21 +171,29 @@ export function generateResults(input: {
     sellerPaysShipping: boolean;
     tiktokAffiliatePercent?: number;
     stockxSellerLevel?: number;
+    isNonStandardCategory?: boolean;
 }) {
     const price = Number(input.price) || 0;
     const shipping = Number(input.shipping) || 0;
     const cost = Number(input.cost) || 0;
     const { sellerPaysShipping, tiktokAffiliatePercent, stockxSellerLevel } = input;
 
-    const results: Record<string, { fee: number; profit: number; margin: number }> = {};
+    const results: Record<string, { platformFee: number; procFee: number; fee: number; profit: number; margin: number }> = {};
 
     Object.keys(feeDatabase).forEach((id) => {
         const platform = feeDatabase[id];
         let rule = { ...platform.rule };
 
         // Handle Dynamic Overrides
-        if (id === "tiktok" && tiktokAffiliatePercent) {
-            rule.commissionPercent = (rule.commissionPercent || 0) + (Number(tiktokAffiliatePercent) / 100);
+        if (id === "tiktok") {
+            // 1. Set the Base Rate: 12.5% for Non-Standard, 6% for Standard (Fashion/Beauty)
+            const baseRate = input.isNonStandardCategory ? 0.125 : 0.06;
+
+            // 2. Convert Affiliate % to decimal (e.g., 10 becomes 0.10)
+            const affiliateRate = (Number(input.tiktokAffiliatePercent) || 0) / 100;
+
+            // 3. Final Commission = Base + Affiliate
+            rule.commissionPercent = baseRate + affiliateRate;
         }
 
         if (id === "stockx" && stockxSellerLevel) {
@@ -194,9 +211,13 @@ export function generateResults(input: {
 
         // Specialized Adjustment for StockX (Flat $5 shipping)
         if (id === "stockx" && price > 0) {
+            const sxPlatformFee = round(calculation.platformFee + 5.00);
+            const sxTotalFee = round(sxPlatformFee + calculation.procFee);
             const sxProfit = round(calculation.profit - 5.00);
-            const sxTotalFee = round(calculation.fee + 5.00);
+
             results[id] = {
+                platformFee: isNaN(sxPlatformFee) ? 0 : sxPlatformFee,
+                procFee: calculation.procFee,
                 fee: isNaN(sxTotalFee) ? 0 : sxTotalFee,
                 profit: isNaN(sxProfit) ? 0 : sxProfit,
                 margin: price > 0 ? round((sxProfit / price) * 100) : 0
@@ -217,7 +238,8 @@ export function calculateAllPlatforms(input: FeeCalculationsInput): PlatformResu
         sellerPaysShipping,
         isProMode,
         tiktokAffiliatePercent,
-        stockxSellerLevel
+        stockxSellerLevel,
+        isNonStandardCategory
     } = input;
 
     const rawResults = generateResults({
@@ -226,7 +248,8 @@ export function calculateAllPlatforms(input: FeeCalculationsInput): PlatformResu
         cost: Number(cost) || 0,
         sellerPaysShipping,
         tiktokAffiliatePercent: Number(tiktokAffiliatePercent) || 0,
-        stockxSellerLevel
+        stockxSellerLevel,
+        isNonStandardCategory
     });
 
     const platforms: PlatformResult[] = [];
@@ -242,19 +265,13 @@ export function calculateAllPlatforms(input: FeeCalculationsInput): PlatformResu
             id,
             name: platform.name,
             isPro,
-            sellingFee: res.fee,
-            procFee: 0,
-            totalFee: res.fee,
-            profit: res.profit,
-            roi: res.margin,
+            sellingFee: round(res.platformFee),
+            procFee: round(res.procFee),
+            totalFee: round(res.fee),
+            profit: round(res.profit),
+            margin: res.margin,
         };
 
-        // UI Detail Splitting Logic (Approximated for backward compatibility)
-        if (id === "stockx") {
-            platformResult.procFee = round(5.00 + (res.fee * 0.03));
-            platformResult.sellingFee = round(res.fee - platformResult.procFee);
-            platformResult.note = "Includes flat $5 shipping fee";
-        }
         if (id === "vinted") platformResult.note = "Buyer pays Protection Fee";
         if (id === "mercari") platformResult.note = "0% Seller Fees";
         if (id === "tiktok" && tiktokAffiliatePercent && Number(tiktokAffiliatePercent) > 0) {

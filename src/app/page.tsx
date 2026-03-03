@@ -31,6 +31,7 @@ export default function Home() {
   const [isProMode, setIsProMode] = useState(false);
   const [tiktokAffiliatePercent, setTiktokAffiliatePercent] = useState<number | "">(0);
   const [stockxSellerLevel, setStockxSellerLevel] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [isNonStandardCategory, setIsNonStandardCategory] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // Load from localStorage
@@ -46,6 +47,7 @@ export default function Home() {
         if (typeof data.isProMode !== 'undefined') setIsProMode(data.isProMode);
         if (typeof data.tiktokAffiliatePercent !== 'undefined') setTiktokAffiliatePercent(data.tiktokAffiliatePercent);
         if (typeof data.stockxSellerLevel !== 'undefined') setStockxSellerLevel(data.stockxSellerLevel);
+        if (typeof data.isNonStandardCategory !== 'undefined') setIsNonStandardCategory(data.isNonStandardCategory);
       } catch (e) {
         console.error("Failed to load settings", e);
       }
@@ -61,10 +63,11 @@ export default function Home() {
       sellerPaysShipping,
       isProMode,
       tiktokAffiliatePercent,
-      stockxSellerLevel
+      stockxSellerLevel,
+      isNonStandardCategory
     };
     localStorage.setItem("reseller_calculator_settings", JSON.stringify(data));
-  }, [salePrice, itemCost, shippingCost, sellerPaysShipping, isProMode, tiktokAffiliatePercent, stockxSellerLevel]);
+  }, [salePrice, itemCost, shippingCost, sellerPaysShipping, isProMode, tiktokAffiliatePercent, stockxSellerLevel, isNonStandardCategory]);
 
   // Raw calculations - only runs when pricing variables change
   const rawResults = useMemo(() => {
@@ -74,9 +77,10 @@ export default function Home() {
       cost: Number(itemCost) || 0,
       sellerPaysShipping,
       tiktokAffiliatePercent: Number(tiktokAffiliatePercent) || 0,
-      stockxSellerLevel
+      stockxSellerLevel,
+      isNonStandardCategory
     });
-  }, [salePrice, shippingCost, itemCost, sellerPaysShipping, tiktokAffiliatePercent, stockxSellerLevel]);
+  }, [salePrice, shippingCost, itemCost, sellerPaysShipping, tiktokAffiliatePercent, stockxSellerLevel, isNonStandardCategory]);
 
   // Final display results - filters and sorts rawResults
   const results = useMemo(() => {
@@ -95,22 +99,20 @@ export default function Home() {
         isPro,
         totalFee: res.fee,
         profit: res.profit,
-        roi: res.margin, // Derived value from engine
-        sellingFee: res.fee, // Default split
-        procFee: 0,
+        margin: res.margin, // Derived value from engine
+        sellingFee: res.platformFee,
+        procFee: res.procFee,
         note: undefined as string | undefined
       };
 
-      // Add UI-specific detail splitting
-      if (id === "stockx") {
-        platformResult.procFee = round(5.00 + (res.fee * 0.03));
-        platformResult.sellingFee = round(res.fee - platformResult.procFee);
-        platformResult.note = "Includes flat $5 shipping fee";
-      }
+      // Add UI-specific detail notes
+      if (id === "stockx") platformResult.note = "Includes flat $5 shipping fee";
       if (id === "vinted") platformResult.note = "Buyer pays Protection Fee";
-      if (id === "mercari") platformResult.note = "0% Seller Fees";
-      if (id === "tiktok" && Number(tiktokAffiliatePercent) > 0) {
-        platformResult.note = `Includes ${tiktokAffiliatePercent}% affiliate`;
+      if (id === "mercari") platformResult.note = "10% Seller Commission + Shipping";
+      if (id === "tiktok") {
+        const affiliateNote = Number(tiktokAffiliatePercent) > 0 ? `Includes ${tiktokAffiliatePercent}% affiliate` : "";
+        const categoryNote = isNonStandardCategory ? "12.5% Non-Standard" : "";
+        platformResult.note = [affiliateNote, categoryNote].filter(Boolean).join(" | ");
       }
 
       platforms.push(platformResult);
@@ -128,6 +130,7 @@ export default function Home() {
     setSellerPaysShipping(true);
     setTiktokAffiliatePercent(0);
     setStockxSellerLevel(1);
+    setIsNonStandardCategory(false);
   };
 
   const handleShare = () => {
@@ -137,7 +140,7 @@ export default function Home() {
       `Item Cost: $${Number(itemCost || 0).toFixed(2)}\n` +
       `Shipping: $${Number(shippingCost || 0).toFixed(2)} (${sellerPaysShipping ? 'Seller Pays' : 'Buyer Pays'})\n` +
       `--------------------------------\n` +
-      results.map((p, i) => `${i === 0 ? '🏆 ' : '- '}${p.name}: $${p.profit.toFixed(2)} (ROI: ${p.roi.toFixed(1)}%)`).join('\n') +
+      results.map((p, i) => `${i === 0 ? '🏆 ' : '- '}${p.name}: $${p.profit.toFixed(2)} (Margin: ${p.margin.toFixed(1)}%)`).join('\n') +
       `\n--------------------------------\n` +
       `Calculated via Reseller Profit Tool`;
 
@@ -260,34 +263,75 @@ export default function Home() {
 
           {/* Pro Settings Row */}
           {isProMode && (
-            <div className="mt-8 pt-8 border-t border-slate-50 grid grid-cols-1 md:grid-cols-2 gap-12 animate-in fade-in slide-in-from-top-2 duration-500">
-              <div>
-                <div className="flex justify-between mb-3">
-                  <label className="label-text">TikTok Affiliate Commission</label>
-                  <span className="text-xs font-black text-indigo-600">{tiktokAffiliatePercent}%</span>
+            <div className="mt-8 pt-8 border-t border-slate-50 grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-2 duration-500">
+              {/* TikTok Shop Card */}
+              <div className="bg-slate-50/50 border border-slate-100 rounded-[4px] p-5 space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="bg-slate-200 text-slate-600 text-[10px] font-black px-2 py-0.5 rounded-[2px] tracking-tight border border-slate-300/50 uppercase">TikTok Shop</span>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="30"
-                  value={Number(tiktokAffiliatePercent) || 0}
-                  onChange={(e) => setTiktokAffiliatePercent(Number(e.target.value))}
-                  className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
-                />
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <label className="label-text mb-0">Non-Standard Category (12.5%)</label>
+                      <div className="group relative">
+                        <div className="p-1 bg-white rounded-full border border-slate-100 cursor-help shadow-sm">
+                          <Info className="w-3 h-3 text-slate-400 group-hover:text-indigo-500 transition-colors" />
+                        </div>
+                        <div className="absolute left-0 bottom-full mb-2 w-64 p-3 bg-slate-900 text-white text-[10px] font-medium rounded-[4px] shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all pointer-events-none z-50">
+                          As of March 2, 2026, TikTok Shop default rates are 12.5% for non-standard categories.
+                          <div className="absolute left-4 top-full w-2 h-2 bg-slate-900 rotate-45 -translate-y-1"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setIsNonStandardCategory(!isNonStandardCategory)}
+                      className={`relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isNonStandardCategory ? "bg-indigo-600" : "bg-slate-200"}`}
+                    >
+                      <span className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${isNonStandardCategory ? "translate-x-5" : "translate-x-0"}`} />
+                    </button>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <label className="label-text">Affiliate Commission</label>
+                      <span className="text-xs font-black text-indigo-600">{tiktokAffiliatePercent}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="30"
+                      value={Number(tiktokAffiliatePercent) || 0}
+                      onChange={(e) => setTiktokAffiliatePercent(Number(e.target.value))}
+                      className="w-full h-1.5 bg-white border border-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label className="label-text mb-3">StockX Seller Level</label>
-                <div className="flex space-x-1 bg-slate-50 p-1 rounded-[4px]">
-                  {[1, 2, 3, 4, 5].map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setStockxSellerLevel(level as 1 | 2 | 3 | 4 | 5)}
-                      className={`flex-1 py-1.5 text-[10px] font-black rounded-[2px] transition-all ${stockxSellerLevel === level ? "bg-white text-indigo-600 shadow-sm border border-slate-100" : "text-slate-400 hover:text-slate-600"}`}
-                    >
-                      LEVEL {level}
-                    </button>
-                  ))}
+              {/* StockX Card */}
+              <div className="bg-slate-50/50 border border-slate-100 rounded-[4px] p-5 space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="bg-slate-200 text-slate-600 text-[10px] font-black px-2 py-0.5 rounded-[2px] tracking-tight border border-slate-300/50 uppercase">StockX</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="label-text">Seller Level</label>
+                  <div className="flex space-x-1 bg-white p-1 rounded-[4px] border border-slate-100">
+                    {[1, 2, 3, 4, 5].map((level) => (
+                      <button
+                        key={level}
+                        onClick={() => setStockxSellerLevel(level as 1 | 2 | 3 | 4 | 5)}
+                        className={`flex-1 py-1.5 text-[10px] font-black rounded-[2px] transition-all ${stockxSellerLevel === level ? "bg-indigo-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+                      >
+                        LV {level}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -368,8 +412,8 @@ export default function Home() {
                         </p>
                       </div>
                       <div className="text-center md:text-left">
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">ROI</p>
-                        <p className="text-sm font-bold text-slate-700">{platform.roi.toFixed(1)}%</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Margin</p>
+                        <p className="text-sm font-bold text-slate-700">{platform.margin.toFixed(1)}%</p>
                       </div>
                       <div className="col-span-2 md:col-span-1 text-center md:text-right pt-4 md:pt-0 border-t border-slate-50 md:border-none">
                         <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Net Profit</p>
@@ -414,7 +458,7 @@ export default function Home() {
                 <span>How to use it</span>
               </h3>
               <p className="text-xs leading-relaxed text-slate-500">
-                Don't just look at profit—watch your ROI. High-turnover items with tighter margins are often better suited for performance platforms like Whatnot, while high-ticket luxury goods should be steered toward StockX or eBay to maximize the protective benefit of their tiered fee caps.
+                Don't just look at profit—watch your margin. High-turnover items with tighter margins are often better suited for performance platforms like Whatnot, while high-ticket luxury goods should be steered toward StockX or eBay to maximize the protective benefit of their tiered fee caps.
               </p>
             </div>
           </div>
