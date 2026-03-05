@@ -39,9 +39,26 @@
 }
 
 .input-with-icon {
-  @apply !pl-10;
+  @apply !pl-11;
 }
 
 .btn-indigo {
   @apply bg-indigo-600 text-white font-semibold py-2 px-4 rounded-[4px] transition-all hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] shadow-sm;
+}
+
+/* Float animation for hero preview */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
 }
