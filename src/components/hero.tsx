@@ -74,15 +74,16 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Detailed, Realistic, Interactive Mockup */}
-        <div className="relative lg:ml-auto w-full max-w-lg">
+        <div className="relative lg:ml-auto w-full max-w-lg mt-12 lg:mt-0">
+
           {/* Subtler Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-indigo-500/10 blur-3xl rounded-full pointer-events-none"></div>
 
-          {/* Main Mockup Container */}
-          <div className="relative bg-white/80 backdrop-blur-xl border border-white rounded-[12px] p-6 shadow-2xl shadow-slate-200/50">
+          {/* Main Mockup Container - Adjusted padding for mobile */}
+          <div className="relative bg-white/80 backdrop-blur-xl border border-white rounded-[12px] p-4 sm:p-6 shadow-2xl shadow-slate-200/50">
 
             {/* Mockup Header */}
-            <div className="flex items-center justify-between mb-8 border-b border-slate-100 pb-4">
+            <div className="flex items-center justify-between mb-6 sm:mb-8 border-b border-slate-100 pb-4">
               <div className="flex gap-1.5">
                 <div className="size-2.5 rounded-full bg-indigo-500"></div>
                 <div className="size-2.5 rounded-full bg-emerald-500"></div>
@@ -95,46 +96,49 @@ export default function Hero() {
 
             {/* Detailed Data Cards Grid */}
             <div className="space-y-6">
-              <div className="grid grid-cols-3 gap-4">
 
-                {/* eBay Card */}
-                <div className="p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden">
+              {/* FIX: Flex row with horizontal scroll on mobile, Grid on desktop */}
+              <div className="flex sm:grid sm:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 sm:pb-0 snap-x custom-scrollbar">
+
+                {/* Poshmark Card */}
+                <div className="min-w-[130px] sm:min-w-0 p-3 sm:p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden snap-start shrink-0">
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-indigo-500 group-hover:scale-x-100 scale-x-0 transition-transform origin-left"></div>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Poshmark Profit</p>
-                  <p className="text-2xl font-black text-slate-900 tracking-tight">$88.00</p>
+                  <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Poshmark</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">$88.00</p>
                   <div className="mt-2.5 h-1 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div className="bg-indigo-500 h-full w-[65%] rounded-full"></div>
+                    <div className="bg-indigo-500 h-full w-[80%] rounded-full"></div>
                   </div>
                   <p className="text-[9px] font-semibold text-slate-500 mt-1.5">Margin: <span className="text-indigo-600 font-bold">80.0%</span></p>
                 </div>
 
-                {/* Vinted Card */}
-                <div className="p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden">
+                {/* StockX Card */}
+                <div className="min-w-[130px] sm:min-w-0 p-3 sm:p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden snap-start shrink-0">
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-emerald-500 group-hover:scale-x-100 scale-x-0 transition-transform origin-left"></div>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">StockX Profit</p>
-                  <p className="text-2xl font-black text-slate-900 tracking-tight">$87.40</p>
+                  <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">StockX</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">$87.40</p>
                   <div className="mt-2.5 h-1 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div className="bg-emerald-500 h-full w-[82%] rounded-full"></div>
+                    <div className="bg-emerald-500 h-full w-[80%] rounded-full"></div>
                   </div>
                   <p className="text-[9px] font-semibold text-slate-500 mt-1.5">Margin: <span className="text-emerald-600 font-bold">80.0%</span></p>
                 </div>
 
-                {/* Depop Card (populated data from the reference you liked) */}
-                <div className="p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden">
+                {/* eBay Card */}
+                <div className="min-w-[130px] sm:min-w-0 p-3 sm:p-4 bg-slate-50 rounded-[8px] border border-slate-100 relative group overflow-hidden snap-start shrink-0">
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-amber-500 group-hover:scale-x-100 scale-x-0 transition-transform origin-left"></div>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">eBay Profit</p>
-                  <p className="text-2xl font-black text-slate-900 tracking-tight">$103.70</p>
+                  <p className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">eBay Profit</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">$103.70</p>
                   <div className="mt-2.5 h-1 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div className="bg-amber-500 h-full w-[74%] rounded-full"></div>
+                    <div className="bg-amber-500 h-full w-[86%] rounded-full"></div>
                   </div>
                   <p className="text-[9px] font-semibold text-slate-500 mt-1.5">Margin: <span className="text-amber-600 font-bold">86.4%</span></p>
                 </div>
 
               </div>
 
-              {/* Detailed Data Table */}
-              <div className="bg-white rounded-[12px] border border-slate-100 shadow-inner overflow-hidden">
-                <table className="w-full text-left text-xs">
+              {/* FIX: Horizontal scroll wrapper for the data table */}
+              <div className="bg-white rounded-[12px] border border-slate-100 shadow-inner overflow-hidden overflow-x-auto custom-scrollbar">
+                {/* Enforced min-width so table columns don't compress */}
+                <table className="w-full text-left text-xs min-w-[380px]">
                   <thead className="bg-slate-50 border-b border-slate-100">
                     <tr>
                       <th className="px-4 py-3 font-semibold text-slate-500 uppercase tracking-tight text-[10px]">Metric</th>
