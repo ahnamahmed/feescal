@@ -1,16 +1,18 @@
 import Link from "next/link";
-import {
-  Calculator as CalcIcon,
-} from "lucide-react";
+import Image from "next/image";
 export default function Nav() {
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <div className="p-2.5 bg-indigo-600 rounded-[4px] shadow-indigo-200 shadow-lg">
-            <CalcIcon className="w-6 h-6 text-white" />
-          </div>
-          <h1 className="text-xl font-bold text-slate-900">Feescal</h1>
+          <Image
+            src="/logo.svg"
+            alt="Feescal Logo"
+            width={240}
+            height={240}
+            priority
+            className="h-36 w-auto"
+          />
         </Link>
         <div className="hidden md:flex items-center gap-10">
           <a className="text-sm font-semibold hover:text-indigo-600 transition-colors" href="#features">Features</a>

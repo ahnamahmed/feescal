@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { generateResults, feeDatabase } from "@/lib/feeEngine";
 import Link from "next/link";
+import Image from "next/image";
 
 const round = (num: number) => Math.round((num + Number.EPSILON) * 100) / 100;
 
@@ -159,12 +160,22 @@ export default function CalculatorPage() {
                         <Link href="/" className="p-2 hover:bg-slate-100 rounded-[4px] transition-colors mr-1">
                             <ArrowLeft className="w-5 h-5 text-slate-400" />
                         </Link>
-                        <div className="p-2.5 bg-indigo-600 rounded-[4px] shadow-indigo-200 shadow-lg">
-                            <CalcIcon className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-bold text-slate-900">Feescal</h1>
-                            <p className="text-xs font-medium text-slate-500">Profit & Fee Analysis for the Modern Reseller</p>
+                        <div className="flex flex-col">
+                            <div className="h-8 flex items-center">
+                                <Image
+                                    src="/logo.svg"
+                                    alt="Feescal Logo"
+                                    width={240}
+                                    height={240}
+                                    priority
+                                    className="h-36 w-auto"
+                                />
+                            </div>
+                            <div className="mt-2">
+                                <span className="text-[11px] font-medium text-gray-500 tracking-tight leading-none mt-1">
+                                    Profit & Fee Analysis for the Modern Reseller
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center space-x-3 bg-white p-1.5 rounded-[4px] border border-slate-100 shadow-sm">
@@ -468,7 +479,7 @@ export default function CalculatorPage() {
                     </div>
 
                     <div className="mt-8 pt-6 border-t border-slate-200/50 flex justify-center">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Last Updated: Feb 2026</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Last Updated: March 2026</p>
                     </div>
                 </div>
 
