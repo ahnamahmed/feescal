@@ -9,7 +9,7 @@ export default function FinalCTA() {
           <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tight">Ready to stop losing profit?</h2>
           <p className="text-indigo-100 text-base lg:text-lg max-w-2xl text-white/90">Join over 10,000 sellers who trust Feescal to manage their online business. Start your free trial today.</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/calculator" className="h-14 px-10 bg-white text-indigo-600 font-black rounded-xl shadow-xl hover:scale-105 transition-transform text-base flex items-center">Try Feescal Free Now</Link>
+            <Link href="/calculator" className="h-14 px-10 bg-white text-indigo-600 font-black rounded-xl shadow-xl hover:scale-105 transition-transform text-base flex items-center">Try Feescal Now</Link>
           </div>
           <p className="text-white/60 text-xs font-medium">No credit card required • Instant access</p>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
+import Nav from "@/components/nav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   description: "Calculate net profit across all major reselling platforms instantly. Updated for 2026 fee changes.",
 
   alternates: {
-    canonical: 'https://feescal.com', // Replace with your actual domain
+    canonical: 'https://feescal.com',
   },
 
   keywords: [
@@ -74,6 +75,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=block"
         />
+        <Nav />
         {children}
         <Analytics />
       </body>

@@ -16,7 +16,7 @@ export default function Nav() {
         </Link>
         <div className="hidden md:flex items-center gap-10">
           <a className="text-sm font-semibold hover:text-indigo-600 transition-colors" href="#features">Features</a>
-          <a className="text-sm font-semibold hover:text-indigo-600 transition-colors" href="#marketplaces">Marketplaces</a>
+          <Link className="text-sm font-semibold hover:text-indigo-600 transition-colors" href="/blog">Resources</Link>
           <a className="text-sm font-semibold hover:text-indigo-600 transition-colors" href="#pricing">Pricing</a>
         </div>
         <div className="flex items-center gap-4">
