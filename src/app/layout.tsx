@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Feescal | Profit & Fee Analysis for the Modern Reseller",
+  icons: {
+    icon: '/favicon.svg',
+  },
   description: "Calculate net profit across all major reselling platforms instantly. Updated for 2026 fee changes.",
 
   alternates: {
