@@ -1,6 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
 export default function Nav() {
+  const pathname = usePathname();
+
+  // Hide the navbar on the calculator page
+  if (pathname === "/calculator") return null;
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -27,5 +36,5 @@ export default function Nav() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
