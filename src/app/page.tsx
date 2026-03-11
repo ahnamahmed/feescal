@@ -1,12 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Hero from "@/components/hero";
 import MarketplaceLogo from "@/components/marketplacelogo";
-import Features from "@/components/features";
-import ComparisonTable from "@/components/comparisontable";
-import PricingCards from "@/components/pricingcards";
-import FinalCTA from "@/components/finalcta";
-import Footer from "@/components/footer";
+
+const Features = dynamic(() => import("@/components/features"), { ssr: false });
+const ComparisonTable = dynamic(() => import("@/components/comparisontable"), { ssr: false });
+const PricingCards = dynamic(() => import("@/components/pricingcards"), { ssr: false });
+const FinalCTA = dynamic(() => import("@/components/finalcta"), { ssr: false });
+const Footer = dynamic(() => import("@/components/footer"), { ssr: false });
 
 export default function LandingPage() {
   return (

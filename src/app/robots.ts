@@ -9,6 +9,5 @@ export default function robots(): MetadataRoute.Robots {
             },
         ],
         sitemap: 'https://feescal.com/sitemap.xml',
-        host: 'https://feescal.com',
     };
 }

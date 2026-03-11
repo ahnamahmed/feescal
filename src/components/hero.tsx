@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -44,14 +45,13 @@ export default function Hero() {
             {/* Avatar Cluster with Hover Effects */}
             <div className="flex -space-x-3">
               {[
-                "https://randomuser.me/api/portraits/women/44.jpg",
-                "https://randomuser.me/api/portraits/men/32.jpg",
-                "https://randomuser.me/api/portraits/women/68.jpg",
-                "https://randomuser.me/api/portraits/men/46.jpg",
-                "https://randomuser.me/api/portraits/women/12.jpg"
+                '/avatars/avatar-1.jpg',
+                '/avatars/avatar-2.jpg',
+                '/avatars/avatar-3.jpg',
+                '/avatars/avatar-4.jpg',
               ].map((src, i) => (
-                <div key={i} className="size-10 rounded-full ring-4 ring-[#f8fafc] bg-slate-200 overflow-hidden hover:-translate-y-1 hover:z-10 transition-transform cursor-pointer shadow-sm">
-                  <img alt={`User ${i + 1}`} src={src} className="w-full h-full object-cover" />
+                <div key={i} className="size-10 rounded-full ring-4 ring-[#f8fafc] bg-slate-200 overflow-hidden hover:-translate-y-1 hover:z-10 transition-transform cursor-pointer shadow-sm relative">
+                  <Image alt={`User ${i + 1}`} src={src} fill className="object-cover" sizes="40px" />
                 </div>
               ))}
             </div>
