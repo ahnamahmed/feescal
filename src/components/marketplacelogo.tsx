@@ -1,6 +1,6 @@
 export default function MarketplaceLogo() {
   const marketplaces = [
-    "eBay", "Vinted", "Depop", "Mercari", "TikTok Shop", "StockX", "Whatnot", "Grailed", "Amazon"
+    "eBay", "Vinted", "Depop", "Mercari", "TikTok Shop", "StockX", "Whatnot", "Grailed"
   ];
 
   return (

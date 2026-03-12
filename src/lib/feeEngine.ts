@@ -49,6 +49,14 @@ export const feeDatabase: Record<string, PlatformConfig> = {
             appliesToShipping: true,
         },
     },
+    grailed: {
+        name: "Grailed",
+        rule: {
+            commissionPercent: 0.09,       // 9% commission
+            processingPercent: 0.0349,     // 3.49% payment processing
+            processingFixed: 0.49,         // $0.49 fixed processing fee
+        },
+    },
     whatnot: {
         name: "Whatnot",
         rule: {
@@ -274,6 +282,7 @@ export function calculateAllPlatforms(input: FeeCalculationsInput): PlatformResu
 
         if (id === "vinted") platformResult.note = "Buyer pays Protection Fee";
         if (id === "mercari") platformResult.note = "0% Seller Fees";
+        if (id === "grailed") platformResult.note = "9% commission + 3.49% payment processing";
         if (id === "tiktok" && tiktokAffiliatePercent && Number(tiktokAffiliatePercent) > 0) {
             platformResult.note = `Includes ${tiktokAffiliatePercent}% affiliate`;
         }

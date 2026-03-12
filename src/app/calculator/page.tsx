@@ -111,6 +111,7 @@ export default function CalculatorPage() {
             if (id === "stockx") platformResult.note = "Includes flat $5 shipping fee";
             if (id === "vinted") platformResult.note = "Buyer pays Protection Fee";
             if (id === "mercari") platformResult.note = "10% Seller Commission + Shipping";
+            if (id === "grailed") platformResult.note = "9% commission + 3.49% payment processing";
             if (id === "tiktok") {
                 const affiliateNote = Number(tiktokAffiliatePercent) > 0 ? `Includes ${tiktokAffiliatePercent}% affiliate` : "";
                 const categoryNote = isNonStandardCategory ? "12.5% Non-Standard" : "";

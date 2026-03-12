@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/blog/ebay-seller-fees-2026',
     '/blog/poshmark-seller-fees-2026',
+    '/blog/grailed-seller-fees-2026',
   ];
 
   const dynamicRoutes = otherPages.map((route) => ({
