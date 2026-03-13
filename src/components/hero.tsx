@@ -29,13 +29,16 @@ export default function Hero() {
           </p>
 
           {/* Polished CTAs */}
-          <div className="flex flex-row items-center gap-4 flex-wrap pt-2">
-            <Link href="/calculator" className="h-14 px-8 bg-indigo-600 text-white font-bold rounded-[8px] hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center whitespace-nowrap shrink-0">
-              Try Calculator
+          <div className="flex flex-row items-center gap-3 pt-2">
+            <Link
+              href="/calculator"
+              className="h-12 px-6 bg-indigo-600 text-white font-bold rounded-[8px] hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center whitespace-nowrap shrink-0 text-sm"
+            >
+              Try Calculator Now
             </Link>
-            <button className="h-14 px-6 bg-transparent text-slate-600 font-bold rounded-[8px] hover:bg-slate-100 hover:text-slate-900 transition-colors flex items-center gap-2">
-              <span className="material-symbols-outlined text-xl">play_circle</span>
-              See How It Works
+            <button className="h-12 px-4 bg-transparent text-slate-600 font-bold rounded-[8px] hover:bg-slate-100 hover:text-slate-900 transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm">
+              <span className="material-symbols-outlined text-lg">play_circle</span>
+              <span>See How It Works</span>
             </button>
           </div>
 
