@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Check, BadgeCheck } from "lucide-react";
 
 export default function PricingCards() {
   return (
@@ -18,15 +19,15 @@ export default function PricingCards() {
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-emerald-500 text-lg">check</span>
+                <Check className="text-emerald-500 w-[18px] h-[18px]" />
                 5 basic calculators
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-emerald-500 text-lg">check</span>
+                <Check className="text-emerald-500 w-[18px] h-[18px]" />
                 Basic eBay &amp; Depop fees
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-emerald-500 text-lg">check</span>
+                <Check className="text-emerald-500 w-[18px] h-[18px]" />
                 Monthly fee updates
               </li>
             </ul>
@@ -44,19 +45,19 @@ export default function PricingCards() {
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
+                <BadgeCheck className="text-indigo-600 w-[18px] h-[18px]" />
                 Unlimited calculations
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
+                <BadgeCheck className="text-indigo-600 w-[18px] h-[18px]" />
                 All marketplaces (20+)
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
+                <BadgeCheck className="text-indigo-600 w-[18px] h-[18px]" />
                 ROI &amp; Margin Analytics
               </li>
               <li className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                <span className="material-symbols-outlined text-indigo-600 text-lg">verified</span>
+                <BadgeCheck className="text-indigo-600 w-[18px] h-[18px]" />
                 Bulk Inventory Import
               </li>
             </ul>

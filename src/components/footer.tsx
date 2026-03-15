@@ -1,3 +1,5 @@
+import { CreditCard, Globe, AtSign } from "lucide-react";
+
 export default function Footer() {
   return (
     <footer className="bg-white pt-24 pb-12 border-t border-slate-100">
@@ -6,7 +8,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
               <div className="size-6 bg-primary rounded flex items-center justify-center text-white">
-                <span className="material-symbols-outlined text-sm">payments</span>
+                <CreditCard className="w-3.5 h-3.5" />
               </div>
               <span className="text-xl font-800 text-slate-900">Feescal</span>
             </div>
@@ -44,10 +46,10 @@ export default function Footer() {
           <p className="text-slate-400 text-xs font-medium">© 2026 Feescal Inc. All rights reserved.</p>
           <div className="flex gap-6">
             <a className="text-slate-400 hover:text-primary transition-colors" href="#">
-              <span className="material-symbols-outlined">public</span>
+              <Globe className="w-6 h-6" />
             </a>
             <a className="text-slate-400 hover:text-primary transition-colors" href="#">
-              <span className="material-symbols-outlined">alternate_email</span>
+              <AtSign className="w-6 h-6" />
             </a>
           </div>
         </div>

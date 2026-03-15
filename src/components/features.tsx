@@ -1,3 +1,5 @@
+import { RefreshCw, PieChart, LayoutTemplate } from "lucide-react";
+
 export default function Features() {
   return (
     <section id="features" className="py-24 bg-white relative overflow-hidden">
@@ -28,7 +30,7 @@ export default function Features() {
             <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
 
             <div className="size-12 bg-white rounded-[10px] shadow-sm border border-slate-100 flex items-center justify-center text-indigo-600 mb-6 group-hover:-translate-y-1 transition-transform duration-300">
-              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>currency_exchange</span>
+              <RefreshCw className="w-[22px] h-[22px]" />
             </div>
 
             <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Updated Fees</h3>
@@ -41,7 +43,7 @@ export default function Features() {
           <div className="group relative p-8 rounded-[16px] bg-[#f8fafc] border border-slate-200/60 hover:bg-white hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-300 overflow-hidden cursor-default">
             <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
             <div className="size-12 bg-white rounded-[10px] shadow-sm border border-slate-100 flex items-center justify-center text-emerald-500 mb-6 group-hover:-translate-y-1 transition-transform duration-300">
-              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>donut_small</span>
+              <PieChart className="w-[22px] h-[22px]" />
             </div>
 
             <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Margin vs ROI</h3>
@@ -55,7 +57,7 @@ export default function Features() {
             <div className="absolute top-0 left-0 w-full h-1 bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
 
             <div className="size-12 bg-white rounded-[10px] shadow-sm border border-slate-100 flex items-center justify-center text-amber-500 mb-6 group-hover:-translate-y-1 transition-transform duration-300">
-              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>splitscreen</span>
+              <LayoutTemplate className="w-[22px] h-[22px]" />
             </div>
 
             <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">Comparison Engine</h3>

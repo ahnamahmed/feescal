@@ -1,3 +1,5 @@
+import { CheckCircle } from "lucide-react";
+
 export default function ComparisonTable() {
   return (
     <section className="py-16 bg-slate-50">
@@ -25,7 +27,7 @@ export default function ComparisonTable() {
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base font-semibold text-slate-700">Fee Accuracy</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-slate-500">+/- 5% Error</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-emerald-600 font-bold flex items-center gap-1.5 md:gap-2">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span> 100% Guaranteed
+                    <CheckCircle className="w-4 h-4" /> 100% Guaranteed
                   </td>
                 </tr>
 
@@ -33,7 +35,7 @@ export default function ComparisonTable() {
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base font-semibold text-slate-700">Calculation Speed</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-slate-500">5-10 Minutes</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-emerald-600 font-bold flex items-center gap-1.5 md:gap-2">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span> Instant (0.1s)
+                    <CheckCircle className="w-4 h-4" /> Instant (0.1s)
                   </td>
                 </tr>
 
@@ -41,7 +43,7 @@ export default function ComparisonTable() {
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base font-semibold text-slate-700">Fee Updates</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-slate-500">Manual Search</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-emerald-600 font-bold flex items-center gap-1.5 md:gap-2">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span> Auto-updates
+                    <CheckCircle className="w-4 h-4" /> Auto-updates
                   </td>
                 </tr>
 
@@ -49,7 +51,7 @@ export default function ComparisonTable() {
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base font-semibold text-slate-700">VAT/Sales Tax</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-slate-500">Often Forgotten</td>
                   <td className="px-4 md:px-8 py-4 md:py-6 text-sm md:text-base text-emerald-600 font-bold flex items-center gap-1.5 md:gap-2">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span> Included
+                    <CheckCircle className="w-4 h-4" /> Included
                   </td>
                 </tr>
 

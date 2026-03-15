@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { PlayCircle, ArrowUpRight, ShieldCheck } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -34,10 +35,10 @@ export default function Hero() {
               href="/calculator"
               className="h-12 px-4 sm:px-8 bg-indigo-600 text-white font-bold rounded-[8px] hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center whitespace-nowrap shrink-0 text-sm sm:text-base"
             >
-              Try Calculator Free
+              Calculate Now
             </Link>
             <button className="h-12 px-3 sm:px-6 bg-transparent text-slate-600 font-bold rounded-[8px] hover:bg-slate-100 hover:text-slate-900 transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 text-sm sm:text-base">
-              <span className="material-symbols-outlined text-lg sm:text-xl">play_circle</span>
+              <PlayCircle className="w-5 h-5 sm:w-5 sm:h-5" />
               <span>See How It Works</span>
             </button>
           </div>
@@ -182,7 +183,7 @@ export default function Hero() {
           <div className="absolute -bottom-6 -left-8 bg-white/90 backdrop-blur-md border border-slate-100 p-4 rounded-[12px] shadow-xl shadow-slate-200/30 animate-float-delayed hidden md:block z-10">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 ring-2 ring-emerald-50">
-                <span className="material-symbols-outlined text-xl">arrow_outward</span>
+                <ArrowUpRight className="w-5 h-5" />
               </div>
               <div>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Avg. Growth</p>
@@ -195,7 +196,7 @@ export default function Hero() {
           <div className="absolute -top-8 -right-8 bg-white border border-slate-100 p-4 rounded-[12px] shadow-xl animate-float hidden md:block">
             <div className="flex items-center gap-4">
               <div className="size-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 ring-2 ring-indigo-50">
-                <span className="material-symbols-outlined text-xl">wifi_protected_setup</span>
+                <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Real-time Sync</p>
