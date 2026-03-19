@@ -26,7 +26,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-lg text-slate-500 max-w-lg leading-relaxed font-medium">
-            The most accurate profit calculator for online sellers. Compare fees across 8 marketplaces instantly and protect your margins.
+            The most accurate profit calculator for online resellers. Compare fees across more than 10 marketplaces instantly and protect your margins.
           </p>
 
           {/* Polished CTAs */}

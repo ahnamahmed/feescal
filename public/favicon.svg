@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- chart bars -->
-  <rect x="6" y="34" width="6" height="16" rx="1" fill="#4F46E5"/>
-  <rect x="14" y="28" width="6" height="22" rx="1" fill="#4F46E5"/>
-  <rect x="22" y="22" width="6" height="28" rx="1" fill="#4F46E5"/>
-
-  <!-- stylized F -->
-  <path fill="#4F46E5" d="M32 16h20l-5 6h-9v6h11l-5 6h-6v14h-6z"/>
+<g fill="#3730a3">
+<rect x="6" y="38" width="10" height="18" rx="2"/>
+<rect x="20" y="30" width="10" height="26" rx="2"/>
+<rect x="34" y="12" width="10" height="44" rx="2"/>
+<rect x="34" y="12" width="22" height="8" rx="2"/>
+<rect x="34" y="30" width="16" height="7" rx="2"/>
+</g>
 </svg>
